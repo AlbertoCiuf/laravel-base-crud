@@ -26,7 +26,7 @@
             <td>{{$comic->series}}</td>
             <td>{{$comic->type}}</td>
             <td>
-              <a href="#" class="btn btn-warning">Visualizza</a>
+              <a href="{{route('comics.show', $comic)}}" class="btn btn-warning">Visualizza</a>
             </td>
           </tr>
         @endforeach
