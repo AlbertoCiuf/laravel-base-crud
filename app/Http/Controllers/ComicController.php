@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Http\Requests\ComicForm;
 
 class ComicController extends Controller
 {
@@ -35,7 +36,7 @@ class ComicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ComicForm $request)
     {
       $data = $request->all();
       $newComic = new Comic();
@@ -45,7 +46,7 @@ class ComicController extends Controller
       $newComic->fill($data);
       $newComic->save();
 
-      return redirect()->route('comics.show', $newComic);
+      return redirect()->route('comics.show', $newComic)->with('success', 'Fumetto inserito correttamente');
 
     }
 
