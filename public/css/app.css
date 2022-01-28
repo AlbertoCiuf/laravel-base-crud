@@ -10962,3 +10962,11 @@ a.text-dark:focus {
   }
 }
 
+form label,
+form input,
+form textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+}
+

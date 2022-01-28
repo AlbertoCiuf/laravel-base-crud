@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ComicController extends Controller
 {
@@ -25,7 +26,7 @@ class ComicController extends Controller
      */
     public function create()
     {
-        //
+        return view('comics.create');
     }
 
     /**
@@ -36,7 +37,16 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $data = $request->all();
+      $newComic = new Comic();
+      $data['slug'] = Str::slug($data['title'], '-');
+
+      // Utilizzo sintassi con fill() attraverso $fillable nel model
+      $newComic->fill($data);
+      $newComic->save();
+
+      return redirect()->route('comics.show', $newComic);
+
     }
 
     /**
@@ -48,6 +58,9 @@ class ComicController extends Controller
     public function show($id)
     {
         $comic = Comic::find($id);
+        if(!$comic) {
+          abort(404, 'Attenzione! Il fumetto non esiste.');
+        }
         return view('comics.show', compact('comic'));
     }
 
@@ -59,7 +72,11 @@ class ComicController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comic = Comic::find($id);
+        if(!$comic) {
+          abort(404, 'Attenzione! Il fumetto non esiste.');
+        }
+        return view('comics.edit', compact('comic'));
     }
 
     /**
@@ -69,9 +86,13 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Comic $comic)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($data['title'], '-');
+        $comic->update($data);
+
+        return redirect()->route('comics.show', $comic);
     }
 
     /**
@@ -80,8 +101,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comic $comic)
     {
-        //
+        $comic->delete();
+        return redirect()->route('comics.index');
     }
 }
