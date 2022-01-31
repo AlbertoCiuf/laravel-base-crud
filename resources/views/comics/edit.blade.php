@@ -12,9 +12,7 @@
           <input type="text" value="{{$comic->title}}" name="title" id="title">
     
           <label for="description">Descrizione</label>
-          <textarea type="text" name="description" id="description">
-            {{$comic->description}}
-          </textarea>
+          <textarea type="text" name="description" id="description">{{$comic->description}}</textarea>
           
           <label for="thumbnail">URL Thumbnail</label>
           <input type="text" value="{{$comic->thumbnail}}"name="thumbnail" id="thumbnail">
