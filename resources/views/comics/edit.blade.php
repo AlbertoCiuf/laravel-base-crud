@@ -4,30 +4,67 @@
   <div class="container ">
     <div class="row">
       <div class="col-8 offset-2">
+
+        @if ($errors->any())
+          <div class="alert alert-danger" role="alert">
+            <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{$error}}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+
         <h2>Stai modificando: {{$comic->title}}</h2>
         <form action="{{route('comics.update', $comic)}}" method="POST" class="py-3">
           @csrf
           @method('PUT')
           <label for="title">Titolo</label>
-          <input type="text" value="{{$comic->title}}" name="title" id="title">
+          <input type="text" name="title" id="title"
+          class="@error('title')
+           form-control is-invalid
+          @enderror"
+          value="{{old('title', $comic->title)}}">
+          @error('title')
+            <span class="text-danger"> {{$message}}</span>
+          @enderror
     
           <label for="description">Descrizione</label>
-          <textarea type="text" name="description" id="description">{{$comic->description}}</textarea>
+          <textarea type="text" name="description" id="description">{{old('description', $comic->description)}}</textarea>
           
           <label for="thumbnail">URL Thumbnail</label>
-          <input type="text" value="{{$comic->thumbnail}}"name="thumbnail" id="thumbnail">
+          <input type="text" name="thumbnail" id="thumbnail"
+          value="{{old('thumbnail', $comic->thumbnail)}}">
     
           <label for="price">Prezzo</label>
-          <input type="text" value="{{$comic->price}}"name="price" id="price">
+          <input type="text" name="price" id="price"
+          class="@error('price')
+          form-control is-invalid
+          @enderror"
+          value="{{old('price', $comic->price)}}">
+          @error('price')
+            <span class="text-danger">{{$message}}</span>
+          @enderror
+
     
           <label for="series">Serie</label>
-          <input type="text"value="{{$comic->series}}" name="series" id="series">
+          <input type="text" name="series" id="series"
+          value="{{old('series', $comic->series)}}">
     
           <label for="sale_date">Data (YYYY-MM-DD)</label>
-          <input type="text"value="{{$comic->sale_date}}" name="sale_date" id="sale_date">
+          <input type="text" name="sale_date" id="sale_date" 
+          class="@error('sale_date')
+          form-control is-invalid
+          @enderror"
+          value="{{old('sale_date')}}">
+          @error('sale_date')
+            <span class="text-danger">{{$message}}</span>
+          @enderror
+
     
           <label for="type">Tipo</label>
-          <input type="text" value="{{$comic->type}}" name="type" id="type">
+          <input type="text" name="type" id="type"
+          value="{{old('type')}}">
     
           <button type="submit" class="btn btn-primary" >Invia</button>
           <button type="reset" class="btn btn-secondary" >Reset</button>

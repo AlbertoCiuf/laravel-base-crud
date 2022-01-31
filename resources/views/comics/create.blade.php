@@ -4,6 +4,17 @@
   <div class="container ">
     <div class="row">
       <div class="col-8 offset-2">
+
+        @if ($errors->any())
+          <div class="alert alert-danger" role="alert">
+            <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{$error}}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+
         <h2>Inserisci un nuovo fumetto</h2>
         <form action="{{route('comics.store')}}" method="POST" class="py-3">
           @csrf
@@ -18,8 +29,7 @@
           @enderror
     
           <label for="description">Descrizione</label>
-          <textarea type="text" name="description" id="description"
-          value="{{old('description')}}"></textarea>
+          <textarea type="text" name="description" id="description">{{old('description')}}</textarea>
           
           <label for="thumbnail">URL Thumbnail</label>
           <input type="text" name="thumbnail" id="thumbnail"
@@ -32,7 +42,7 @@
           @enderror"
           value="{{old('price')}}">
           @error('price')
-            <span class="text-danger">Il campo è obbligatorio e deve essere un numero compreso tra 0 e 99.99</span>
+            <span class="text-danger">{{$message}}</span>
           @enderror
 
     
@@ -47,7 +57,7 @@
           @enderror"
           value="{{old('sale_date')}}">
           @error('sale_date')
-            <span class="text-danger">Il campo deve essere una data.</span>
+            <span class="text-danger">{{$message}}</span>
           @enderror
 
     

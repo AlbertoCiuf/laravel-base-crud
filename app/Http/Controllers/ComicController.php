@@ -87,7 +87,7 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comic $comic)
+    public function update(ComicForm $request, Comic $comic)
     {
         $data = $request->all();
         $data['slug'] = Str::slug($data['title'], '-');
