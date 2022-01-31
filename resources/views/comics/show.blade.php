@@ -2,6 +2,13 @@
 
 @section('content')
   <div class="container">
+
+    @if (session('success'))
+      <div class="alert alert-success" role="alert">
+        {{session('success')}}
+      </div>
+    @endif
+
     <h1 class="py-3">Fumetto Selezionato</h1>
     <div class="row">
       <div class="col-6">

@@ -2,8 +2,15 @@
 
 @section('content')
   <div class="container">
+    
     <h1>Fumetti</h1>
-
+    
+    @if (session('deleted'))
+      <div class="alert alert-danger" role="alert">
+        {{session('deleted')}}
+      </div>
+    @endif
+    
     <table class="table table-striped">
       <thead>
         <tr>
@@ -32,7 +39,7 @@
               <a href="{{route('comics.edit', $comic)}}" class="btn btn-outline-success">Modifica</a>
             </td>
             <td>
-              <form action="{{route('comics.destroy', $comic)}}" method="POST">
+              <form onsubmit="return confirm('Sei sicuro di voler eliminare {{$comic->title}}?')" action="{{route('comics.destroy', $comic)}}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-outline-danger">Elimina</button>

@@ -16,7 +16,7 @@ class ComicController extends Controller
      */
     public function index()
     {
-        $comics = Comic::paginate(4);
+        $comics = Comic::orderBy('id','desc')->paginate(4);
         return view('comics.home', compact('comics'));
     }
 
@@ -105,6 +105,6 @@ class ComicController extends Controller
     public function destroy(Comic $comic)
     {
         $comic->delete();
-        return redirect()->route('comics.index');
+        return redirect()->route('comics.index')->with('deleted', "Il fumetto '$comic->title' è stato eliminato.");
     }
 }
